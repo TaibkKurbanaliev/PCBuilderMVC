@@ -1,0 +1,425 @@
+﻿@using PCBuilderMVC.Domain.ViewModels;
+@model PCViewModel;
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .carousel-item {
+            height: 300px;
+        }
+
+            .carousel-item img {
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @if (Model.Images != null)
+                        {
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Images[0])" alt="Photo 1" />
+                            </div>
+                            @for (int i = 1; i < Model.Images.Length; i++)
+                            {
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Images[i])" alt="Photo @i" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/nophoto.jpg" alt="Photo 1" />
+                            </div>
+                        }
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1 class="mt-2">Name</h1>
+                <p class="lead">Description</p>
+                <p>Cost</p>
+            </div>
+        </div>
+    </div>
+    <style>
+        .cpu-info-container {
+            margin-bottom: 100px; /* Добавляем отступ вниз */
+        }
+    </style>
+
+    <div class="row mt-5 cpu-info-container">
+        <div class="col-md-6">
+            <h2>CPU</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.CPU.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CPU.Image)" alt="CPU Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="cpu_photo.jpg" alt="CPU Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.CPU.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.CPU.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.CPU.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.CPU.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>GPU</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.GPU.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.GPU.Image)" alt="GPU Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="GPU_photo.jpg" alt="GPU Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.GPU.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.GPU.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.GPU.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.GPU.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><div class="col-md-6">
+            <h2>MotherBoard</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.MotherBoard.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.MotherBoard.Image)" alt="MotherBoard Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="MotherBoard_photo.jpg" alt="MotherBoard Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.MotherBoard.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.MotherBoard.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.MotherBoard.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.MotherBoard.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>DRAM</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.DRAM.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.DRAM.Image)" alt="DRAM Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="DRAM_photo.jpg" alt="DRAM Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.DRAM.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.DRAM.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.DRAM.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.DRAM.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>PowerSupply</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.PowerSupply.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.PowerSupply.Image)" alt="PowerSupply Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="PowerSupply_photo.jpg" alt="PowerSupply Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.PowerSupply.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.PowerSupply.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.PowerSupply.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.PowerSupply.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Case</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.Case.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Case.Image)" alt="Case Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="Case_photo.jpg" alt="Case Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.Case.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.Case.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.Case.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.Case.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>PCColling</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.PCColling.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.PCColling.Image)" alt="PCColling Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="PCColling_photo.jpg" alt="PCColling Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.PCColling.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.PCColling.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.PCColling.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.PCColling.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Storages</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.Storages.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Storages.Image)" alt="Storages Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="Storages_photo.jpg" alt="Storages Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.Storages.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.Storages.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.Storages.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.Storages.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Fans</h2>
+            <div class="row border rounded p-3">
+                <div class="col-md-6">
+                    @if (Model.Fans.Image != null)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Fans.Image)" alt="Fans Photo" width="100%">
+                    }
+                    else
+                    {
+                        <img src="Fans_photo.jpg" alt="Fans Photo" width="100%">
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-4 col-form-label">Название:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="name">@Model.Fans.Name</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="link">@Model.Fans.Link</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <p class="form-control-plaintext" id="description">@Model.Fans.Description</p>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cost" class="col-sm-4 col-form-label">Стоимость:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" id="cost">@Model.Fans.Cost</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
