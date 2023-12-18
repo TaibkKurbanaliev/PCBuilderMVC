@@ -1,21 +1,22 @@
-﻿using PCBuilderMVC.Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using PCBuilderMVC.Domain.Entities;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PCBuilderMVC.Domain.ViewModels
 {
-    public class PCViewModel
+    public class PCCreate
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string Images;
+        public IFormFile Images;
         public int Cost { get; set; }
         public Component CPU { get; set; }
         public Component GPU { get; set; }

@@ -41,3 +41,18 @@
 .margin-top-20 {
     margin-top: 20px;
 }
+
+.image-container {
+    width: 300px;
+    height: 200px;
+    position: relative;
+}
+
+#preview_0, #preview_1, #preview_2, #preview_3, #preview_4, #preview_5, #preview_6, #preview_7, #preview_8, #preview_9{
+    max-height: calc(100% - 34px); /* Уменьшаем высоту до 34px */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(183deg) brightness(103%) contrast(103%);
+}

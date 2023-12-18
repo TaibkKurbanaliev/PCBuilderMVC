@@ -32,18 +32,10 @@ namespace PCBuilderMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(PCViewModel pcView)
+        public IActionResult Create(PCCreate pcView)
         {
-            if (ModelState.IsValid)
-            {
-                _service.CreatePC(pcView);
-            }
-            else
-            {
-                throw new Exception();
-            }
-
-            return View(pcView);
+            Console.WriteLine();
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
