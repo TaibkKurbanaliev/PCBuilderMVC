@@ -1,98 +1,441 @@
-﻿
+﻿@using PCBuilderMVC.Domain.ViewModels;
+@model PCCreate
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CPU Preview</title>
         <link rel="stylesheet" href="~/css/createpc.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <div class="row mt-5">
-        <div class="col-md-6 col-sm-auto">
-            <h2>CPU</h2>
-            <div class="row border rounded p-3">
-                <div class="col-md-4">
-                    <div id="image-container">
-                        <img id="preview" src="#" alt="Preview" width="100%">
-                        <button type="button" class="btn btn-primary mt-3" onclick="addImage(event)">
-                            Добавить фотографию
-                        </button>
-                        <input type="file" id="upload-photo" style="display: none;">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group row">
-                        <label for="name" class="col-sm-4 col-form-label">Имя:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control-plaintext" id="name" value="Название CPU"
-                                   readonly>
+        <form asp-controller="PC" asp-action="Create" method="post">
+            <div class="container">
+                <div class="row mt-5">
+                    @*<div class="col-md-3">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner"></div> <a class="carousel-control-prev"
+                                                                                        href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+                        </a> <a class="carousel-control-next"
+                                href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
+                        </a>
+                    </div> <button type="button" class="btn btn-primary mb-2" id="addImageBtn" onclick="addImageToCarousel()">Добавить изображение</button>
+                </div>*@
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_0" src="#" alt="Preview_0" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 0)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_0" asp-for="@Model.Images" style="display: none;">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control-plaintext" id="link" value="http://ссылка.com"
-                                   readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Описание:</label>
-                        <textarea class="form-control" id="description" rows="3" readonly>Описание CPU</textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <!-- Duplicate the CPU block here -->
-            <h2>CPU</h2>
-            <div class="row border rounded p-3">
-                <div class="col-md-4">
-                    <div id="image-container">
-                        <img id="preview" src="#" alt="Preview" width="100%">
-                        <button type="button" class="btn btn-primary mt-3" onclick="addImage(event)">
-                            Добавить фотографию
-                        </button>
-                        <input type="file" id="upload-photo" style="display: none;">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group row">
-                        <label for="name" class="col-sm-4 col-form-label">Имя:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control-plaintext" id="name" value="Название CPU"
-                                   readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control-plaintext" id="link" value="http://ссылка.com"
-                                   readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Описание:</label>
-                        <textarea class="form-control" id="description" rows="3" readonly>Описание CPU</textarea>
+                    <div class="col-md-6">
+                        <h3>Информация о компьютере:</h3>
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control border-primary" asp-for="@Model.Name"
+                                           id="name" maxlength="30" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control border-primary"
+                                           asp-for="@Model.CPU.Cost" id="price" maxlength="10" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Описание:</label> <textarea class="form-control border-primary" id="description" maxlength="200" rows="3"
+                                                                                     asp-for="@Model.CPU.Description"></textarea>
+                            </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="container">
+                <h2>CPU</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_1" src="#" alt="Preview_1" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 1)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_1" asp-for="@Model.CPU.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.CPU.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.CPU.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.CPU.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.CPU.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>GPU</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_2" src="#" alt="Preview_2" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 2)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_2" asp-for="@Model.GPU.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.GPU.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.GPU.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.GPU.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.GPU.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>MotherBoard</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_3" src="#" alt="Preview_3" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 3)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_3" asp-for="@Model.MotherBoard.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.MotherBoard.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.MotherBoard.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.MotherBoard.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.MotherBoard.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>DRAM</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_4" src="#" alt="Preview_4" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 4)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_4" asp-for="@Model.DRAM.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.DRAM.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.DRAM.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.DRAM.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.DRAM.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>PowerSupply</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_5" src="#" alt="Preview_5" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 5)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_5" asp-for="@Model.PowerSupply.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PowerSupply.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PowerSupply.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PowerSupply.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.PowerSupply.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Case</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_6" src="#" alt="Preview_6" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 6)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_6" asp-for="@Model.Case.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Case.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Case.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Case.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.Case.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>PCColling</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_7" src="#" alt="Preview_7" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 7)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_7" asp-for="@Model.PCColling.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PCColling.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PCColling.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.PCColling.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.PCColling.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Storages</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_8" src="#" alt="Preview_8" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 8)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_8" asp-for="@Model.Storages.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Storages.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Storages.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Storages.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.Storages.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Fans</h2>
+                <div class="row border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-container">
+                            <img id="preview_9" src="#" alt="Preview_9" width="100%">
+                            <button type="button" class="btn btn-primary add-image-button" onclick="addImage(event, 9)"> Добавить фотографию </button>
+                            <input type="file" id="upload-photo_9" asp-for="@Model.Fans.Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Имя:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Fans.Name" id="name" maxlength="30" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="link" class="col-sm-4 col-form-label">Ссылка:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Fans.Link" id="link" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-4 col-form-label">Цена:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control border-primary" asp-for="@Model.Fans.Cost" id="price" maxlength="10" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea class="form-control border-primary" id="description" maxlength="200" rows="3" asp-for="@Model.Fans.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Отправить">
+        </form>
+        <script>
+            function addImage(event, blockNumber) {
+                event.preventDefault();
+                document.getElementById('upload-photo_' + blockNumber).click();
+            }
 
-    <script>
-        function addImage(event) {
-            event.preventDefault();
-            document.getElementById('upload-photo').click();
-        }
+            function previewPhoto(event, blockNumber) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var arrayBuffer = reader.result;
+                    var byteArray = new Uint8Array(arrayBuffer);
+                    var preview = document.getElementById('preview_' + blockNumber);
+                    preview.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
 
-        function previewPhoto(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var preview = document.getElementById('preview');
-                preview.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
+            document.getElementById('upload-photo_0').addEventListener('change', function (event) {
+                previewPhoto(event, 0);
+            }, false);
 
-        document.getElementById('upload-photo').addEventListener('change', previewPhoto, false);
-    </script>
+            document.getElementById('upload-photo_1').addEventListener('change', function (event) {
+                previewPhoto(event, 1);
+            }, false);
+
+            document.getElementById('upload-photo_2').addEventListener('change', function (event) {
+                previewPhoto(event, 2);
+            }, false);
+
+            document.getElementById('upload-photo_3').addEventListener('change', function (event) {
+                previewPhoto(event, 3);
+            }, false);
+
+            document.getElementById('upload-photo_4').addEventListener('change', function (event) {
+                previewPhoto(event, 4);
+            }, false);
+
+            document.getElementById('upload-photo_5').addEventListener('change', function (event) {
+                previewPhoto(event, 5);
+            }, false);
+
+            document.getElementById('upload-photo_6').addEventListener('change', function (event) {
+                previewPhoto(event, 6);
+            }, false);
+
+            document.getElementById('upload-photo_7').addEventListener('change', function (event) {
+                previewPhoto(event, 7);
+            }, false);
+
+            document.getElementById('upload-photo_8').addEventListener('change', function (event) {
+                previewPhoto(event, 8);
+            }, false);
+
+            document.getElementById('upload-photo_9').addEventListener('change', function (event) {
+                previewPhoto(event, 9);
+            }, false);
+        </script>
     </body>
